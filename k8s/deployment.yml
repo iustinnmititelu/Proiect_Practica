@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ati-track
+  labels:
+    app: ati-track
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ati-track
+  template:
+    metadata:
+      labels:
+        app: ati-track
+    spec:
+      containers:
+        - name: ati-track
+          image: ati-track:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080

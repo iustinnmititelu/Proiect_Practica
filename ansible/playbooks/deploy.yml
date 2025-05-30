@@ -1,0 +1,17 @@
+---
+- name: Build and deploy ati-track to kind cluster
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Build Docker image
+      shell: docker build -t ati-track:latest .
+      args:
+        chdir: '{{ playbook_dir }}/../../'
+
+    - name: Load image into kind
+      shell: kind load docker-image ati-track:latest --name myapp-cluster
+
+    - name: Apply Kubernetes manifests
+      shell: kubectl apply -f k8s/
+      args:
+        chdir: '{{ playbook_dir }}/../../'
